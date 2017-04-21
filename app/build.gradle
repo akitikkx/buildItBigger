@@ -29,6 +29,7 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.2.1'
     compile 'com.google.firebase:firebase-ads:10.2.1'
     compile project(':jokeTellLib')
+    compile project(':jokedisplaylib')
 }
 
 apply plugin: 'com.google.gms.google-services'
