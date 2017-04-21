@@ -1,4 +1,4 @@
-package com.udacity.gradle.builditbigger.fragments;
+package com.udacity.gradle.builditbigger.free;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +10,6 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 import com.udacity.gradle.builditbigger.R;
-
 
 /**
  * A placeholder fragment containing a simple view.

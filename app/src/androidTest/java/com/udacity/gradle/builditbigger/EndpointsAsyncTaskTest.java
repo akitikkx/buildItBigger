@@ -2,8 +2,6 @@ package com.udacity.gradle.builditbigger;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.udacity.gradle.builditbigger.activities.MainActivity;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
