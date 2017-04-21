@@ -1,18 +1,30 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.JokeTell;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
+import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
+import java.io.IOException;
+
+import za.co.ahmed.builditbigger.backend.myApi.MyApi;
 import za.co.ahmedtikiwa.jokedisplaylib.JokeDisplayActivity;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +56,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        JokeTell jokeTell = new JokeTell();
-
-        Intent displayJoke = new Intent(MainActivity.this, JokeDisplayActivity.class);
-        displayJoke.putExtra(JokeDisplayActivity.JOKE_EXTRA, jokeTell.getRandomJoke());
-        startActivity(displayJoke);
+        new EndpointsAsyncTask().execute(this);
     }
 
+    class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
+        private MyApi myApiService = null;
 
+        @Override
+        protected String doInBackground(Context... params) {
+            if (myApiService == null) {
+                MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
+                        .setApplicationName(getString(R.string.app_name))
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api")
+                        .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
+                            @Override
+                            public void initialize(AbstractGoogleClientRequest<?> request) throws IOException {
+                                request.setDisableGZipContent(true);
+                            }
+                        });
+
+                myApiService = builder.build();
+            }
+
+            try {
+                return myApiService.getJoke().execute().getData();
+            } catch (IOException e) {
+                Log.d(TAG, e.getMessage());
+                return e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Intent displayJoke = new Intent(MainActivity.this, JokeDisplayActivity.class);
+            displayJoke.putExtra(JokeDisplayActivity.JOKE_EXTRA, result);
+            startActivity(displayJoke);
+        }
+    }
 }

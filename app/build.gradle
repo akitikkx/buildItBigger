@@ -25,11 +25,16 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile project(':jokeTellLib')
+    compile project(':jokedisplaylib')
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.google.firebase:firebase-core:10.2.1'
     compile 'com.google.firebase:firebase-ads:10.2.1'
-    compile project(':jokeTellLib')
-    compile project(':jokedisplaylib')
+    compile 'com.google.code.findbugs:jsr305:2.0.1'
+    compile 'com.google.http-client:google-http-client-android:1.19.0'
+    compile 'com.google.api-client:google-api-client:1.19.0'
+    compile project(path: ':backend', configuration: 'android-endpoints')
 }
+
 
 apply plugin: 'com.google.gms.google-services'
