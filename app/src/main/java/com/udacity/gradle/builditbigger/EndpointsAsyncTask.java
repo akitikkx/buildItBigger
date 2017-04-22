@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -22,9 +23,23 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     private static final String LOCAL_ROOT_URL = "http://10.0.2.2:8080/_ah/api";
     private MyApi myApiService = null;
     private Activity activity;
+    private ProgressDialog dialog;
+
 
     public EndpointsAsyncTask(Activity activity) {
         this.activity = activity;
+        this.dialog  = new ProgressDialog(this.activity);
+        this.dialog.setCancelable(false);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        if (this.dialog != null) {
+            this.dialog.setMessage(activity.getString(R.string.joke_loading_progress_message));
+            if (!this.dialog.isShowing()) {
+                this.dialog.show();
+            }
+        }
     }
 
     @Override
@@ -53,6 +68,10 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
+        if (this.dialog != null && this.dialog.isShowing()) {
+            this.dialog.dismiss();
+        }
+
         Intent displayJoke = new Intent(activity, JokeDisplayActivity.class);
         displayJoke.putExtra(JokeDisplayActivity.JOKE_EXTRA, result);
         activity.startActivity(displayJoke);
