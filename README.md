@@ -9,7 +9,8 @@ GCE module and passes them to the Android Library for display.
 
 ## Dependencies
 
-A google-services.json file is required and should be placed in the app/src/free module directory 
+A google-services.json file is required and should be placed in the app/src/free module directory. 
+
 
 ##What Did I Learn?
 
