@@ -1,11 +1,12 @@
 package com.udacity.gradle.builditbigger;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -23,22 +24,18 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
     private static final String LOCAL_ROOT_URL = "http://10.0.2.2:8080/_ah/api";
     private MyApi myApiService = null;
     private Activity activity;
-    private ProgressDialog dialog;
+    private ProgressBar progressBar;
 
 
     public EndpointsAsyncTask(Activity activity) {
         this.activity = activity;
-        this.dialog  = new ProgressDialog(this.activity);
-        this.dialog.setCancelable(false);
+        this.progressBar = (ProgressBar) this.activity.findViewById(R.id.progress_bar);
     }
 
     @Override
     protected void onPreExecute() {
-        if (this.dialog != null) {
-            this.dialog.setMessage(activity.getString(R.string.joke_loading_progress_message));
-            if (!this.dialog.isShowing()) {
-                this.dialog.show();
-            }
+        if (this.progressBar != null) {
+            this.progressBar.setVisibility(View.VISIBLE);
         }
     }
 
@@ -68,8 +65,8 @@ public class EndpointsAsyncTask extends AsyncTask<Context, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if (this.dialog != null && this.dialog.isShowing()) {
-            this.dialog.dismiss();
+        if (this.progressBar != null) {
+            this.progressBar.setVisibility(View.GONE);
         }
 
         Intent displayJoke = new Intent(activity, JokeDisplayActivity.class);

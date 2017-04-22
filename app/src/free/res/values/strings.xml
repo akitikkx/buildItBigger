@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_instruction">Build It Bigger (Free Version) Click the button below for a joke</string>
+    <string name="welcome_instruction">Free Version. Click the button below for a joke</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="mobileads_test_init_string">ca-app-pub-3940256099942544~3347511713</string>
 </resources>
