@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Build It Bigger (Paid Version)</string>
+    <string name="app_name">Build It Bigger</string>
+    <string name="welcome_instruction">Build It Bigger (Paid Version) Click the button below for a joke</string>
 </resources>
