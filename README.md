@@ -12,7 +12,7 @@ GCE module and passes them to the Android Library for display.
 A google-services.json file is required and should be placed in the app/src/free module directory. 
 
 
-##What Did I Learn?
+## What Did I Learn?
 
 Learnt the role of Gradle in building Android Apps and how to use
 Gradle to manage apps of increasing complexity. Learnt to:
